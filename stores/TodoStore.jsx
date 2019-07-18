@@ -1,9 +1,16 @@
+import {observable, action, computed} from 'mobx'
 class TodoStore {
     @observable taskList = [];
 
-    @action addtask (task) {
+    @action addTask = (task) => {
         this.taskList.push(task);
+    }
+
+    @computed get taskCount () {
+        return this.taskList.length;
     }
 }
 
-export default TodoStore;
+const store = new TodoStore();
+
+export default store;

@@ -1,9 +1,12 @@
 import React , { Component } from 'react'
-import Link from 'next/link'
-import Head from '../components/head'
-import Nav from '../components/nav'
+import Head from '../components/Head'
+import Nav from '../components/Nav'
+import CreateTask from '../components/CreateTask'
+import {Provider, observer } from 'mobx-react'
+import TaskStore from '../stores/TodoStore'
 
-
+// @inject('TodoStore')
+@observer
 class Home extends Component {
   constructor(props){
     super(props);
@@ -14,54 +17,14 @@ class Home extends Component {
 
   }
 
-  onHandleChange = (event) => {
-    this.setState({
-      [event.target.name] : event.target.value
-    })
-    console.log(event.target.value);
-  }
-
-  onSubmit = () => {
-    this.setState({
-
-    })
-  }
-
-
-
   render() {
     return (
       <div>
         <Head title="Home" />
         <Nav />
-
-        <div className="row">
-          <div className="col-md-12 col-xs-12">
-            <div className="row">
-              <div className="col-md-4 offset-4">
-                <div className="card">
-                  <div className="card-body">
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="taskInput"
-                      value={this.state.taskInput}
-                      onChange={this.onHandleChange}
-                    />
-                    <button
-                      className="btn btn-warning pull-left mt-2"
-                    >
-                      Add
-                    </button>
-                    <table className="table">
-
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Provider TaskStore={TaskStore}>
+          <CreateTask/>
+        </Provider>
       </div>
     )
   }

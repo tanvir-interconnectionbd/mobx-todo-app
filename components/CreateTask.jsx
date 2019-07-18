@@ -23,15 +23,15 @@ class CreateTask extends Component {
     })
   }
 
-  onItemDelete (e, id) {
-    e.preventDefault()
-    console.log("delete",id)
+  onItemDelete (event, id) {
+    event.preventDefault()
     this.props.TaskStore.deleteTask(id);
-    // console.log("delete",id);
   }
 
-  onUpdate (task) {
-    // this.props.TaskStore.updateTask(1,"None")
+  onUpdate (event, id) {
+    event.preventDefault();
+    const enteredName = prompt('Update Task')
+    this.props.TaskStore.updateTask(id,enteredName)
   }
 
 
@@ -68,7 +68,7 @@ class CreateTask extends Component {
                 <div className="card">
                   <div className="card-body">
                     <h1>Total task {TaskStore.taskCount}</h1>
-                    <form onSubmit={e=>this.onSubmit(e)}>
+                    <form onSubmit={e => this.onSubmit(e)}>
                       <input
                         className="form-control"
                         type="text"
@@ -89,8 +89,8 @@ class CreateTask extends Component {
                             <tr key={key}>
                               <td>{elements.id}</td>
                               <td>{elements.name}</td>
-                              <td><button className="btn btn-success" onClick={this.onUpdate(key)}>Edit</button></td>
-                              <td><button className="btn btn-danger" onClick={e=>this.onItemDelete(e, key+1)}>Delete</button></td>
+                              <td><button className="btn btn-success" onClick={e => this.onUpdate(e, key+1)}>Edit</button></td>
+                              <td><button className="btn btn-danger" onClick={e => this.onItemDelete(e, key+1)}>Delete</button></td>
                             </tr>
                         ))
                         }

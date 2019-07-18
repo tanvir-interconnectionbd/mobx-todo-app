@@ -6,12 +6,13 @@ class TodoStore {
         this.taskList.push(task);
     }
 
-    // @action updateTask = (key,value) => {
-    //     this.taskList.filter.se
-    // }
+    @action updateTask = (id,value) => {
+        const obj = this.taskList.findIndex(item => item.id == id);
+        this.taskList[obj]?this.taskList[obj].name = value:"";
+    
+    }
 
     @action deleteTask = (id) => {
-        console.log("MObx",id)
         const index = this.taskList.findIndex(item => item.id == id);
         this.taskList.splice(index, 1);
     }

@@ -7,14 +7,13 @@ class TodoStore {
     }
 
     @action updateTask = (id,value) => {
-        const obj = this.taskList.findIndex(item => item.id == id);
-        this.taskList[obj]?this.taskList[obj].name = value:"";
-    
+        console.log(this.taskList[id]);
+        this.taskList[id].name = value;
     }
 
     @action deleteTask = (id) => {
-        const index = this.taskList.findIndex(item => item.id == id);
-        this.taskList.splice(index, 1);
+
+        this.taskList.splice(id, 1);
     }
 
     @computed get taskCount () {

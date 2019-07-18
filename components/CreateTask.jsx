@@ -8,7 +8,6 @@ class CreateTask extends Component {
   constructor(props){
     super(props);
     this.state = {
-      id: 0,
       taskInput : "",
       taskList : []
     }
@@ -31,35 +30,27 @@ class CreateTask extends Component {
   onUpdate (event, id) {
     event.preventDefault();
     const enteredName = prompt('Update Task')
-    this.props.TaskStore.updateTask(id,enteredName)
+    console.log("Name",id);
+    this.props.TaskStore.updateTask(id, enteredName)
   }
-
-
-
 
   onSubmit (event)  {
     event.preventDefault();
-    const { taskInput, id } = this.state;
-    const { TaskStore } =this.props;
+    const { taskInput } = this.state;
     if (taskInput.length > 0) {
       const data = {
-        id: id+1,
         name: taskInput
       }
       console.log(data);
       this.props.TaskStore.addTask(data);
       this.setState({
-        id: id+1,
         taskInput: ""
       })
     }
   }
 
-
-
   render() {
     const {TaskStore} =this.props;
-
     return (
         <div className="row">
           <div className="col-md-12 col-xs-12">
@@ -68,7 +59,7 @@ class CreateTask extends Component {
                 <div className="card">
                   <div className="card-body">
                     <h1>Total task {TaskStore.taskCount}</h1>
-                    <form onSubmit={e => this.onSubmit(e)}>
+                    <form className="mb-2" onSubmit={e => this.onSubmit(e)}>
                       <input
                         className="form-control"
                         type="text"
@@ -77,7 +68,7 @@ class CreateTask extends Component {
                         onChange={this.onHandleChange}
                       />
                       <button
-                        className="btn btn-warning pull-left mt-2"
+                        className="btn btn-warning pull-left mt-2 mb-2"
                       >
                         Add
                       </button>
@@ -87,10 +78,12 @@ class CreateTask extends Component {
                         {
                           TaskStore.taskList.map((elements,key)=>(
                             <tr key={key}>
-                              <td>{elements.id}</td>
-                              <td>{elements.name}</td>
-                              <td><button className="btn btn-success" onClick={e => this.onUpdate(e, key+1)}>Edit</button></td>
-                              <td><button className="btn btn-danger" onClick={e => this.onItemDelete(e, key+1)}>Delete</button></td>
+                              <td>{key+1}</td>
+                              <td className="w-50">{elements.name}</td>
+                              <td className="text-left">
+                                <button className="btn btn-success" onClick={e => this.onUpdate(e, key)}>Edit</button>
+                                <button className="btn btn-danger ml-2" onClick={e => this.onItemDelete(e, key)}>Delete</button>
+                              </td>
                             </tr>
                         ))
                         }
